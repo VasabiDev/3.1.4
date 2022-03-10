@@ -72,7 +72,9 @@
                                         <td th:text="${user.lastName}"></td>
                                         <td th:text="${user.age}"></td>
                                         <td th:text="${user.email}"></td>
-                                        <td>тут будет роль</td>
+                                        <td><section th:each="role : ${user.roles}">
+                                            <p th:text="${role.getName()}"></p>
+                                        </section></td>
 
                                         <!--                <td th:text="${user.authorities}"></td>-->
 
@@ -139,7 +141,10 @@
                         <td th:text="${user.lastName}"></td>
                         <td th:text="${user.age}"></td>
                         <td th:text="${user.email}"></td>
-                        <td>тут будет роль</td>
+                        <td><section th:each="role : ${user.roles}">
+                            <p th:text="${role.getName()}"></p>
+                        </section></td>
+
 
                         <td>
                             <button class="btn btn-info"

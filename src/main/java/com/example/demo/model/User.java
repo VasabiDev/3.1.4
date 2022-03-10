@@ -13,7 +13,7 @@ import static java.util.Objects.hash;
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
-@AllArgsConstructor
+
 public class User implements UserDetails {
 
 
@@ -36,14 +36,21 @@ public class User implements UserDetails {
 
     @Column(name = "password")
     private String password;
-
-    @ManyToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER)
+   // @ManyToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE )
     @JoinTable(name = "app_user_roles",
             joinColumns = @JoinColumn(name = "app_user_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private List<Role> roles = new ArrayList<>();
 
-
+    public User(String firstName, String lastName, Byte age, String email, String password, List<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
