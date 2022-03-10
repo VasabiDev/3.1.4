@@ -1,19 +1,26 @@
 package com.example.demo.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.*;
+
 import static java.util.Objects.hash;
 
-
-@Table(name = "users")
 @Entity
-public class User {
+@Table(name = "users")
+@NoArgsConstructor
+public class User implements UserDetails {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -21,9 +28,56 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "pass")
+    @Column(name = "password")
     private String pass;
 
+    @ManyToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "app_user_roles",
+            joinColumns = @JoinColumn(name = "app_user_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+    private  List<Role> authorities = new ArrayList<>();
+
+    public User(String name, String email, String pass, List<Role> authorities) {
+        this.name = name;
+        this.email = email;
+        this.pass = pass;
+        this.authorities = authorities;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    public String getPassword() {
+        return pass;
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
     public String getName() {
         return name;
@@ -41,16 +95,20 @@ public class User {
         this.email = email;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getPass() {
         return pass;
     }
 
     public void setPass(String pass) {
         this.pass = pass;
-    }
-
-    public int getId() {
-        return id;
     }
 
     @Override
