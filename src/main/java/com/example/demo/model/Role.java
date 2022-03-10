@@ -18,8 +18,15 @@ public class Role implements GrantedAuthority {
     private Long id;
     private String name;
 
+    public String getName() {
+        return name;
+    }
 
-    @ManyToMany(mappedBy = "authorities")
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @ManyToMany(mappedBy = "roles")
     List<User> users;
 
     @Override

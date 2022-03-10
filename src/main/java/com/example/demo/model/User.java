@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +13,7 @@ import static java.util.Objects.hash;
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
 
 
@@ -22,41 +22,43 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "firstName")
+    private String firstName;
+
+    @Column(name = "lastName")
+    private String lastName;
+
+    @Column(name = "age")
+    private Byte age;
 
     @Column(name = "email")
     private String email;
 
     @Column(name = "password")
-    private String pass;
+    private String password;
 
     @ManyToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "app_user_roles",
             joinColumns = @JoinColumn(name = "app_user_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
-    private  List<Role> authorities = new ArrayList<>();
+    private List<Role> roles = new ArrayList<>();
 
-    public User(String name, String email, String pass, List<Role> authorities) {
-        this.name = name;
-        this.email = email;
-        this.pass = pass;
-        this.authorities = authorities;
-    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return roles;
     }
 
     public String getPassword() {
-        return pass;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
+
 
     @Override
     public boolean isAccountNonExpired() {
@@ -79,12 +81,37 @@ public class User implements UserDetails {
         return true;
     }
 
-    public String getName() {
-        return name;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Byte getAge() {
+        return age;
+    }
+
+    public void setAge(Byte age) {
+        this.age = age;
     }
 
     public String getEmail() {
@@ -95,26 +122,22 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public Long getId() {
-        return id;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "login='" + name + '\'' +
+                "login='" + firstName + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }
@@ -130,8 +153,8 @@ public class User implements UserDetails {
 
         User user = (User) obj;
         return
-                (Objects.equals(getName(), user.getName())
-                        || (getName() != null && getName().equals(user.getName())))
+                (Objects.equals(getFirstName(), user.getFirstName())
+                        || (getFirstName() != null && getFirstName().equals(user.getFirstName())))
                         && (Objects.equals(getEmail(), user.getEmail())
                         || (getEmail() != null && getEmail().equals(user.getEmail())
                 ));
@@ -141,8 +164,8 @@ public class User implements UserDetails {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
-        result = (prime * result + (hash(getName()) + hash(getEmail())));
+        result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
+        result = (prime * result + (hash(getEmail()) + hash(getEmail())));
         result = prime * result + ((getEmail() == null) ? 0 : (getEmail().hashCode() >>> 31));
         return result;
     }

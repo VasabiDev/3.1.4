@@ -86,10 +86,7 @@ private DataSource dataSource;
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
-// это убрать если что, ниже
                 .passwordEncoder(NoOpPasswordEncoder.getInstance())
-             //   .usersByUsernameQuery("select name, password, 'true' as enabled from users where name = ?")
-             //   .authoritiesByUsernameQuery("select u.name from users u inner join app_user_roles ur on u.id = ur.user_id where u.name = ?");
                 .usersByUsernameQuery("select email, password,'true' as enabled  from users where email=?")
                 .authoritiesByUsernameQuery("select email, password,'true' as enabled  from users where email=?");
 

@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -10,23 +8,48 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 <h2 align=center>ADD NEW USER</h2>
 <div>
     <div th:each="el : ${user}">
 
-        <form method="post" align=center>
 
-            <input type="text" th:value="${user.name}" name="name" placeholder="Name">
+            <form method="post" align=center role="form">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" th:value="${user.firstName}" name="firstName" placeholder="firstName">
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" th:value="${user.lastName}" name="lastName" placeholder="lastName">
+                </div>
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="text" th:value="${user.age}" name="age" placeholder="age">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" th:value="${user.email}" name="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="text" th:value="${user.password}" name="password" placeholder="Password">
+                </div>
 
-            <input type="text" th:value="${user.email}" name="email" placeholder="Email">
+                <button  class="btn btn-success" type="submit" value="Update User">Add</button>
+            </form>
+<!--        <form method="POST" align=center>-->
 
-            <input type="text" th:value="${user.password}" name="password" placeholder="Password">
+<!--                    <input type="text" th:value="${user.firstName}" name="firstName" placeholder="firstName">-->
+<!--            <input type="text" th:value="${user.lastName}" name="lastName" placeholder="lastName">-->
+<!--            <input type="text" th:value="${user.age}" name="age" placeholder="age">-->
+<!--            <input type="text" th:value="${user.email}" name="email" placeholder="Email">-->
+<!--            <input type="text" th:value="${user.password}" name="password" placeholder="Password">-->
 
-            <button type="submit" value="Update User">Add</button>
-        </form>
+<!--            <button type="submit" value="Update User">Add</button>-->
+<!--        </form>-->
 
         <form action="#" th:action="@{/users}" align=center>
             <button type="submit">back</button>

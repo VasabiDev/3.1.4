@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.model.Role;
 import com.example.demo.model.User;
+import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,39 +10,41 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userDao;
-
+    private final RoleRepository roleDao;
 
     @Autowired
-    public UserServiceImpl(UserRepository userDao) {
+    public UserServiceImpl(UserRepository userDao, RoleRepository roleDao) {
         this.userDao = userDao;
+        this.roleDao = roleDao;
     }
+
+
     @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        return userDao.findByName(name);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userDao.findByEmail(email);
 
     }
-    public void userAdd(String name, String email, String password) {
-        User user = new User();
-        user.setName(name);
-        user.setEmail(email);
-        user.setPass(password);
-    //    authorities.add(role);
-       userDao.save(user);
-    }
 
-    public void userEdit(Long id, String name, String email, String password) {
-        User user = getById(id);
-        user.setName(name);
-        user.setEmail(email);
-        user.setPass(password);
+    public void userAdd(User user) {
         userDao.save(user);
+    }
+
+
+    public void userEdit(User user) {
+        User newUser = getById(user.getId());
+        newUser.setFirstName(user.getFirstName());
+        newUser.setLastName(user.getLastName());
+        newUser.setAge(user.getAge());
+        newUser.setEmail(user.getEmail());
+        newUser.setPassword(user.getPassword());
+       // newUser.setAuthorities((List<Role>) user.getAuthorities());
+        userDao.save(newUser);
     }
 
 
@@ -60,13 +63,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     }
 
-//    public void addRoleToUser(String username, String roleName) {
-//        User user = userDao.findByName(username);
-//        Role role = userDao.findByName(roleName);
-//        Collection<Role> roles = user.getRoles();
-//        if(!roles.contains(role)) {
-//            user.get().add(role);
-//        }
-//    }
+    public void addRoleToUser(String email, String roleName) {
+        User user = userDao.findByEmail(email);
+        Role role = roleDao.findByName(roleName);
+        List<Role> roles = (List<Role>) user.getAuthorities();
+        if (!roles.contains(role)) {
+            roles.add(role);
+         //   user.setAuthorities(roles);
+        }
+    }
 
 }
