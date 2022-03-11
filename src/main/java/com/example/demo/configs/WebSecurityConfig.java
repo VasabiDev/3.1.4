@@ -46,10 +46,11 @@ private DataSource dataSource;
         http
                 .csrf().disable()
                 .authorizeRequests()
-      //        .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
-       //         .antMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/admin").hasRole("ADMIN")
+             .antMatchers(HttpMethod.GET, "/user").hasAnyRole("USER","ADMIN")
+
                 //     .antMatchers(HttpMethod.GET, "/users").permitAll()
-                .antMatchers(HttpMethod.GET, "/user").hasAnyRole("ADMIN", "USER")
+             //   .antMatchers(HttpMethod.GET, "/user").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().successHandler(successUserHandler)

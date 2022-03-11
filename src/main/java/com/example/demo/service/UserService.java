@@ -12,4 +12,5 @@ public interface UserService {
     User getById(Long id);
     void delete(User user);
     Iterable<User> getAll();
+    User getUserByEmail(String email);
 }

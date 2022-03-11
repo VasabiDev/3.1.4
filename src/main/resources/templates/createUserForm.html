@@ -37,6 +37,10 @@
                     <label>Password</label>
                     <input type="text" th:value="${user.password}" name="password" placeholder="Password">
                 </div>
+                <select multiple class="form-control" id="role" name="role">
+                    <option value="ADMIN">ADMIN</option>
+                    <option value="USER">USER</option>
+                </select>
 
                 <button  class="btn btn-success" type="submit" value="Update User">Add</button>
             </form>
