@@ -77,7 +77,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userDao.findAll();
 
     }
-    public User getUserByEmail(String email){
+
+    public User getUserByEmail(String email) {
         return userDao.findByEmail(email);
     }
 

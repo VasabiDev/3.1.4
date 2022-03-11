@@ -45,7 +45,7 @@ public class AdminController {
     public String userAddProcess(@ModelAttribute("user") @Valid User user,
                                  @RequestParam(name = "role", required = false) String[] roles) {
         List<Role> roleList = new ArrayList<>();
-        for(String stringRoles: roles){
+        for (String stringRoles : roles) {
             roleList.add(roleService.findByName(stringRoles));
         }
         user.setRoles(roleList);

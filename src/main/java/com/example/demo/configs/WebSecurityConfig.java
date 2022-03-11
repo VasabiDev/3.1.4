@@ -27,8 +27,8 @@ import javax.sql.DataSource;
 
 @Configuration
 
-@ComponentScan(basePackages = {"com.example.demo","com.example.demo.controller"})
-@EntityScan(basePackages={"java","com.example.demo","com.example.demo.model"})
+@ComponentScan(basePackages = {"com.example.demo", "com.example.demo.controller"})
+@EntityScan(basePackages = {"java", "com.example.demo", "com.example.demo.model"})
 @EnableJpaRepositories(basePackages = {"com.example.demo"})
 //@EnableTransactionManagement
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-private DataSource dataSource;
+    private DataSource dataSource;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -47,10 +47,10 @@ private DataSource dataSource;
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/admin").hasRole("ADMIN")
-             .antMatchers(HttpMethod.GET, "/user").hasAnyRole("USER","ADMIN")
+                .antMatchers(HttpMethod.GET, "/user").hasAnyRole("USER", "ADMIN")
 
                 //     .antMatchers(HttpMethod.GET, "/users").permitAll()
-             //   .antMatchers(HttpMethod.GET, "/user").hasAnyRole("ADMIN", "USER")
+                //   .antMatchers(HttpMethod.GET, "/user").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().successHandler(successUserHandler)
@@ -92,9 +92,7 @@ private DataSource dataSource;
                 .authoritiesByUsernameQuery("select email, password,'true' as enabled  from users where email=?");
 
 
-
     }
-
 
 
 }

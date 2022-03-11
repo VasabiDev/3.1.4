@@ -72,9 +72,11 @@
                                         <td th:text="${user.lastName}"></td>
                                         <td th:text="${user.age}"></td>
                                         <td th:text="${user.email}"></td>
-                                        <td><section th:each="role : ${user.roles}">
-                                            <p th:text="${role.getName()}"></p>
-                                        </section></td>
+                                        <td>
+                                            <section th:each="role : ${user.roles}">
+                                                <p th:text="${role.getName()}"></p>
+                                            </section>
+                                        </td>
 
 
                                         <td>
@@ -114,8 +116,6 @@
                 <h4 class="modal-title">Edit user</h4>
             </div>
             <div class="modal-body">
-
-
 
 
             </div>
