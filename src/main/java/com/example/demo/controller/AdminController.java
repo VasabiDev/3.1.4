@@ -25,23 +25,16 @@ public class AdminController {
     @Autowired
     private RoleRepository roleService;
 
-    // показать всех пользователей
-    @GetMapping("/")
-    public String showUserList(Model model) {
+    @GetMapping()
+    public String showUserList(Model model, @ModelAttribute("user") @Valid User user) {
+        model.addAttribute("user", new User()) ;
         model.addAttribute("users", userService.getAll());
 
         return "users";
     }
 
-    // вызвать форму добавления пользователя
-    @GetMapping("/users/add")
-    public String createUserForm(@ModelAttribute("user") @Valid User user, Model model) {
-        model.addAttribute("user", new User());
-        return "createUserForm";
-    }
 
-    // добавить пользователя в базу из формы
-    @PostMapping("/users/add")
+    @PostMapping()
     public String userAddProcess(@ModelAttribute("user") @Valid User user,
                                  @RequestParam(name = "role", required = false) String[] roles) {
         List<Role> roleList = new ArrayList<>();
@@ -52,6 +45,26 @@ public class AdminController {
         userService.userAdd(user);
         return "redirect:/admin/";
     }
+
+    // вызвать форму добавления пользователя
+    @GetMapping("/users/add")
+    public String createUserForm(@ModelAttribute("user") @Valid User user, Model model) {
+        model.addAttribute("user", new User());
+        return "createUserForm";
+    }
+
+    // добавить пользователя в базу из формы
+//    @PostMapping("/users/add")
+//    public String userAddProcess(@ModelAttribute("user") @Valid User user,
+//                                 @RequestParam(name = "role", required = false) String[] roles) {
+//        List<Role> roleList = new ArrayList<>();
+//        for (String stringRoles : roles) {
+//            roleList.add(roleService.findByName(stringRoles));
+//        }
+//        user.setRoles(roleList);
+//        userService.userAdd(user);
+//        return "redirect:/admin/";
+//    }
 
 
     // вызвать форму редактирования пользователя
