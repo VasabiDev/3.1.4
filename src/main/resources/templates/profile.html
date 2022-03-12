@@ -18,5 +18,51 @@
 </head>
 <body>
 <h2 align=center>EDIT USER</h2>
+<div>
+    <div th:each="el : ${user}">
+        <form method="post" align=center role="form">
+            <div class="form-group">
+                <label>First Name</label>
+                <input type="text" th:value="${user.firstName}" name="firstName" placeholder="firstName">
+
+            </div>
+            <div class="form-group">
+                <label>Last Name</label>
+
+                <input type="text" th:value="${user.lastName}" name="lastName" placeholder="lastName">
+
+            </div>
+            <div class="form-group">
+                <label>Age</label>
+
+                <input type="text" th:value="${user.age}" name="age" placeholder="age">
+
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" th:value="${user.email}" name="email" placeholder="Email">
+
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="text" th:value="${user.password}" name="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label>Roles</label>
+
+
+                <section th:each="role : ${user.roles}">
+                    <p th:text="${role.getName()}"></p>
+                </section>
+
+
+            </div>
+
+            <button class="btn btn-success" type="submit" value="Update User">Update</button>
+        </form>
+
+    </div>
+    <br/>
+</div>
 </body>
 </html>

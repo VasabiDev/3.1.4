@@ -1,11 +1,10 @@
 package com.example.demo.model;
 
-import lombok.AllArgsConstructor;
+
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,6 +20,7 @@ public class Role implements GrantedAuthority {
     public Role(String name) {
         this.name = name;
     }
+
 
     public String getName() {
         return name;

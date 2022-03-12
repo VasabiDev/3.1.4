@@ -27,8 +27,8 @@ public class UserController {
 
 
     @GetMapping()
-    public String index(Model model, User user) {
-        model.addAttribute("user", userService.getUserByEmail(user.getEmail()));
+    public String index(Model model, Principal principal) {
+        model.addAttribute("user", userService.getUserByEmail(principal.getName()));
         model.addAttribute("roles", roleService.findAll());
         return "profile";
     }
