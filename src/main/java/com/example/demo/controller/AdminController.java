@@ -11,10 +11,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -26,10 +26,12 @@ public class AdminController {
     private RoleRepository roleService;
 
     @GetMapping()
-    public String showUserList(Model model, @ModelAttribute("user") @Valid User user) {
-        model.addAttribute("user", new User()) ;
+    public String showUserList(Model model,
+                               @ModelAttribute("user") User user) {
+        model.addAttribute("user", new User());
         model.addAttribute("users", userService.getAll());
-
+        model.addAttribute("userInfo", userService.getUserByEmail(user.getEmail()));
+        model.addAttribute("roles", roleService.findAll());
         return "users";
     }
 
@@ -41,9 +43,8 @@ public class AdminController {
         for (String stringRoles : roles) {
             roleList.add(roleService.findByName(stringRoles));
         }
-        user.setRoles(roleList);
         userService.userAdd(user);
-        return "redirect:/admin/";
+        return "redirect:/admin";
     }
 
     // вызвать форму добавления пользователя
@@ -52,19 +53,6 @@ public class AdminController {
         model.addAttribute("user", new User());
         return "createUserForm";
     }
-
-    // добавить пользователя в базу из формы
-//    @PostMapping("/users/add")
-//    public String userAddProcess(@ModelAttribute("user") @Valid User user,
-//                                 @RequestParam(name = "role", required = false) String[] roles) {
-//        List<Role> roleList = new ArrayList<>();
-//        for (String stringRoles : roles) {
-//            roleList.add(roleService.findByName(stringRoles));
-//        }
-//        user.setRoles(roleList);
-//        userService.userAdd(user);
-//        return "redirect:/admin/";
-//    }
 
 
     // вызвать форму редактирования пользователя
@@ -78,13 +66,13 @@ public class AdminController {
     @PostMapping("users/edit/{id}")
     public String userEditProcess(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         userService.userEdit(user);
-        return "redirect:/admin/";
+        return "redirect:/admin";
     }
 
     // удаление пользователя из базы
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.delete(userService.getById(id));
-        return "redirect:/admin/";
+        return "redirect:/admin";
     }
 }
