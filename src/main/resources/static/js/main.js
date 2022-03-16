@@ -1,6 +1,6 @@
 let roleList = [
-    {id: 1, role: "ROLE_USER"},
-    {id: 2, role: "ROLE_ADMIN"}
+    {id: 1, role: "USER"},
+    {id: 2, role: "ADMIN"}
 ]
 let isUser = true;
 

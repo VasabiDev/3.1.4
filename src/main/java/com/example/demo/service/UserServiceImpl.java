@@ -33,13 +33,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     }
 
-    public void userAdd(User user) {
+    public User userAdd(User user) {
         userDao.save(encodePass(user));
+        return user;
     }
 
 
-    public void userEdit(User user) {
+    public User userEdit(User user) {
         userDao.save(user);
+        return user;
     }
 
 

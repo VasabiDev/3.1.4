@@ -46,8 +46,8 @@ async function editUser(modal, id) {
                 <div class="form-group">
                     <label for="roles" class="com-form-label">Role</label>
                     <select multiple id="roles" size="2" class="form-control" style="max-height: 100px">
-                    <option value="ROLE_USER">USER</option>
-                    <option value="ROLE_ADMIN">ADMIN</option>
+                    <option value="USER">USER</option>
+                    <option value="ADMIN">ADMIN</option>
                     </select>
                 </div>
             </form>

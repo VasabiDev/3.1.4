@@ -20,7 +20,7 @@ async function getUser() {
                 let role = ""
             for (let i = 0; i < user.roles.length; i++) {
                 role = user.roles[i].role
-                if (role === "ROLE_ADMIN") {
+                if (role === "ADMIN") {
                     isUser = false;
                 }
             }

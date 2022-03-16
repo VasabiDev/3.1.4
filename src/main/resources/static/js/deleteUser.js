@@ -14,24 +14,25 @@ async function deleteUser(modal, id) {
             <form class="form-group text-center" id="deleteUser">
                <div class="form-group">
                     <label for="userId" class="col-form-label">ID</label>
-                    <input type="text" class="form-control username" id="userId" value="${user.userId}" readonly>
+                    <input type="text" class="form-control username" id="userId" value="${user.id}" readonly>
                </div>
                    
                <div class="form-group">
                     <label for="username" class="col-form-label">Username</label>
-                    <input type="text" class="form-control username" id="username" value="${user.username}" readonly>
+                    <input type="text" class="form-control username" id="username" value="${user.firstName}" readonly>
                </div>
 
                 <div class="form-group">
                     <label for="name" class="com-form-label">Name</label>
-                    <input type="text" class="form-control" id="name" value="${user.name}" readonly>
+                    <input type="text" class="form-control" id="name" value="${user.lastName}" readonly>
                 </div>
 
-                <div class="form-group">
-                    <label for="surname" class="com-form-label">Surname</label>
-                    <input type="text" class="form-control" id="surname" value="${user.surname}" readonly>
-                </div>
-
+          
+          
+          
+          
+          
+          
                 <div class="form-group">
                     <label for="age" class="com-form-label">Age</label>
                     <input type="number" class="form-control" id="age" value="${user.age}" readonly>

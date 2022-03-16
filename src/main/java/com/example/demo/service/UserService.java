@@ -10,9 +10,9 @@ import java.util.List;
 
 
 public interface UserService {
-    void userAdd(User user);
+    User userAdd(User user);
 
-    void userEdit(User user);
+    User userEdit(User user);
 
     UserDetails loadUserByUsername(String email);
 
