@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public interface UserService {
@@ -19,7 +20,9 @@ public interface UserService {
 
     void delete(User user);
 
-    Iterable<User> getAll();
+    List<User> getAll();
 
     User getUserByEmail(String email);
+
+    User encodePass(User user);
 }

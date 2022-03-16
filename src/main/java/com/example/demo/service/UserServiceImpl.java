@@ -1,17 +1,15 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,11 +18,12 @@ import java.util.List;
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userDao;
     private final RoleRepository roleDao;
-
+    private final PasswordEncoder passwordEncoder;
     @Autowired
-    public UserServiceImpl(UserRepository userDao, RoleRepository roleDao) {
+    public UserServiceImpl(UserRepository userDao, RoleRepository roleDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
         this.roleDao = roleDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -35,7 +34,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     public void userAdd(User user) {
-        userDao.save(user);
+        userDao.save(encodePass(user));
     }
 
 
@@ -54,7 +53,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userDao.delete(user);
     }
 
-    public Iterable<User> getAll() {
+    public List<User> getAll() {
         return userDao.findAll();
 
     }
@@ -63,5 +62,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userDao.findByEmail(email);
     }
 
+    @Override
+    public User encodePass(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return user;
+    }
 
 }
